@@ -1,1 +1,23 @@
-<p>register works!</p>
+<h2>Register</h2>
+<form (ngSubmit)="onSubmit()">
+  <label>
+    Nom:
+    <input type="text" [value]="name" (input)="name = $any($event.target).value" name="name" />
+  </label>
+  <br />
+  <label>
+    Email:
+    <input type="email" [value]="email" (input)="email = $any($event.target).value" name="email" required />
+  </label>
+  <br />
+  <label>
+    Mot de passe:
+    <input type="password" [value]="password" (input)="password = $any($event.target).value" name="password" required />
+  </label>
+  <br />
+  <button type="submit">S'inscrire</button>
+</form>
+
+@if (message) {
+  <p>{{ message }}</p>
+}

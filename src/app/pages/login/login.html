@@ -2,15 +2,17 @@
 <form (ngSubmit)="onSubmit()">
   <label>
     Email:
-    <input type="email" [(ngModel)]="email" name="email" required />
+    <input type="email" [value]="email" (input)="email = $any($event.target).value" name="email" required />
   </label>
   <br />
   <label>
     Mot de passe:
-    <input type="password" [(ngModel)]="password" name="password" required />
+    <input type="password" [value]="password" (input)="password = $any($event.target).value" name="password" required />
   </label>
   <br />
   <button type="submit">Se connecter</button>
 </form>
 
-<p *ngIf="message">{{ message }}</p>
+@if (message) {
+  <p>{{ message }}</p>
+}
