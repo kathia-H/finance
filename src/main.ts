@@ -1,24 +1,15 @@
-import { enableProdMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { App } from './app/app';
-import { appConfig } from './app/app.config';
+import { AppComponent } from './app/app.component';
 import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
-import { provideHttpClient } from '@angular/common/http';  
+import { provideHttpClient } from '@angular/common/http';
+import { importProvidersFrom } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-
-import { provideForms } from '@angular/forms';   
-
-if (environment.production) {
-  enableProdMode();
-}
-
-/
-bootstrapApplication(App, {
+bootstrapApplication(AppComponent, {
   providers: [
-    appConfig,                    
-    provideRouter(routes),         
-    provideHttpClient(),          
-    
+    provideRouter(routes),
+    provideHttpClient(),
+    importProvidersFrom(FormsModule)
   ]
 }).catch(err => console.error(err));
