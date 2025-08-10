@@ -18,14 +18,17 @@ export class RegisterComponent {
   constructor(private auth: AuthService) {}
 
   onSubmit() {
+    console.log('Form submitted:', { name: this.name, email: this.email, password: this.password });
+    
     this.auth.register(this.email, this.password, this.name).subscribe({
       next: (res) => {
         localStorage.setItem('jwtToken', res.token);
         this.message = `Compte créé ! Bienvenue, ${res.user.name || res.user.email}!`;
+        console.log('Registration success:', res);
       },
       error: (err) => {
         this.message = 'Erreur lors de la création du compte';
-        console.error(err);
+        console.error('Registration error:', err);
       }
     });
   }
