@@ -1,0 +1,75 @@
+<h2>Ajouter un compte</h2>
+
+<div style="max-width: 500px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+  
+  <div style="margin-bottom: 15px;">
+    <label style="display: block; margin-bottom: 5px; font-weight: bold;">
+      Nom du compte *
+    </label>
+    <input 
+      type="text" 
+      [value]="name" 
+      (input)="name = $any($event.target).value"
+      placeholder="Ex: Compte Courant, Livret A..."
+      style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"
+      required 
+    />
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label style="display: block; margin-bottom: 5px; font-weight: bold;">
+      Type de compte
+    </label>
+    <select 
+      [value]="type" 
+      (change)="type = $any($event.target).value"
+      style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"
+    >
+      <option value="checking">Compte Courant</option>
+      <option value="savings">Livret d'Épargne</option>
+      <option value="credit">Carte de Crédit</option>
+      <option value="investment">Investissement</option>
+    </select>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <label style="display: block; margin-bottom: 5px; font-weight: bold;">
+      Solde initial (€)
+    </label>
+    <input 
+      type="number" 
+      [value]="balance" 
+      (input)="balance = parseFloat($any($event.target).value) || 0"
+      step="0.01"
+      placeholder="0.00"
+      style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"
+    />
+  </div>
+
+  <div style="display: flex; gap: 10px; justify-content: space-between;">
+    <button 
+      type="button" 
+      (click)="goBack()"
+      style="padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;"
+    >
+      Annuler
+    </button>
+    
+    <button 
+      type="button" 
+      (click)="onSubmit()"
+      [disabled]="loading || !name.trim()"
+      style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;"
+      [style.opacity]="loading || !name.trim() ? '0.6' : '1'"
+    >
+      {{ loading ? 'Création...' : 'Créer le compte' }}
+    </button>
+  </div>
+
+  <div *ngIf="message" style="margin-top: 15px; padding: 10px; border-radius: 4px;" 
+       [style.background-color]="message.includes('succès') ? '#d4edda' : '#f8d7da'"
+       [style.color]="message.includes('succès') ? '#155724' : '#721c24'">
+    {{ message }}
+  </div>
+
+</div>

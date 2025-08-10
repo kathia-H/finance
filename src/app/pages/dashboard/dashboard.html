@@ -1,31 +1,95 @@
 <h2>Dashboard</h2>
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
-  
-  <div style="border: 1px solid #ccc; padding: 15px; border-radius: 5px;">
-    <h3>Mes Comptes</h3>
-    <p>Solde total: <strong>0 €</strong></p>
-    <button>Ajouter un compte</button>
-  </div>
 
-  <div style="border: 1px solid #ccc; padding: 15px; border-radius: 5px;">
-    <h3>Transactions Récentes</h3>
-    <p>Aucune transaction pour le moment</p>
-    <button>Ajouter une transaction</button>
-  </div>
+<div *ngIf="user">
+  <p style="margin-bottom: 20px;">Bienvenue, <strong>{{ user.name || user.email }}</strong>!</p>
+</div>
 
-  <div style="border: 1px solid #ccc; padding: 15px; border-radius: 5px;">
-    <h3>Budgets</h3>
-    <p>Aucun budget défini</p>
-    <button>Créer un budget</button>
-  </div>
+<div *ngIf="loading">
+  <p>Chargement de vos données...</p>
+</div>
+<div *ngIf="!loading">
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+    
+    <!-- Mes Comptes -->
+    <div style="border: 1px solid #ccc; padding: 15px; border-radius: 5px;">
+      <h3>Mes Comptes</h3>
+      <p>Solde total: <strong>{{ totalBalance }} €</strong></p>
+      <div *ngIf="accounts.length > 0">
+        <div style="margin: 10px 0;">
+          <div *ngFor="let account of accounts; trackBy: trackAccountById">
+            <div style="display: flex; justify-content: space-between; margin: 5px 0; padding: 5px; background: #f9f9f9;">
+              <span>{{ account.name }} ({{ account.type }})</span>
+              <strong>{{ account.balance }} €</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="accounts.length === 0">
+        <p><em>Aucun compte pour le moment</em></p>
+      </div>
+      <button (click)="goToAddAccount()" style="background: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">Ajouter un compte</button>
+    </div>
 
-  <div style="border: 1px solid #ccc; padding: 15px; border-radius: 5px;">
-    <h3>Actions Rapides</h3>
-    <button style="margin: 5px;">Nouvelle dépense</button>
-    <br>
-    <button style="margin: 5px;">Nouveau revenu</button>
-    <br>
-    <button style="margin: 5px;">Voir les rapports</button>
-  </div>
+    <!-- Transactions Récentes -->
+    <div style="border: 1px solid #ccc; padding: 15px; border-radius: 5px;">
+      <h3>Transactions Récentes</h3>
+      <div *ngIf="transactions.length > 0">
+        <div style="margin: 10px 0;">
+          <div *ngFor="let transaction of transactions; trackBy: trackTransactionById">
+            <div style="display: flex; justify-content: space-between; margin: 5px 0; padding: 5px; background: #f9f9f9;">
+              <div>
+                <div><strong>{{ transaction.category }}</strong></div>
+                <div style="font-size: 0.8em; color: #666;">{{ transaction.note }}</div>
+              </div>
+              <div style="text-align: right;">
+                <div [style.color]="transaction.type === 'income' ? 'green' : 'red'">
+                  {{ transaction.type === 'income' ? '+' : '-' }}{{ transaction.amount }} €
+                </div>
+                <div style="font-size: 0.8em; color: #666;">{{ transaction.date }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="transactions.length === 0">
+        <p><em>Aucune transaction pour le moment</em></p>
+      </div>
+      <button>Ajouter une transaction</button>
+    </div>
 
+    <!-- Budgets -->
+    <div style="border: 1px solid #ccc; padding: 15px; border-radius: 5px;">
+      <h3>Budgets du mois</h3>
+      <div *ngIf="budgets.length > 0">
+        <div style="margin: 10px 0;">
+          <div *ngFor="let budget of budgets; trackBy: trackBudgetById">
+            <div style="margin: 10px 0; padding: 10px; background: #f9f9f9;">
+              <div style="display: flex; justify-content: space-between;">
+                <strong>{{ budget.category }}</strong>
+                <span>{{ budget.spent }} / {{ budget.amount }} €</span>
+              </div>
+              <div style="width: 100%; background: #ddd; height: 10px; margin: 5px 0;">
+                <div [style.width.%]="budget.percentage" [style.background-color]="budget.percentage > 100 ? 'red' : (budget.percentage > 80 ? 'orange' : 'green')" style="height: 100%;"></div>
+              </div>
+              <div style="font-size: 0.8em; color: #666;">{{ budget.percentage }}% utilisé</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="budgets.length === 0">
+        <p><em>Aucun budget défini pour ce mois</em></p>
+      </div>
+      <button>Créer un budget</button>
+    </div>
+
+    <!-- Actions Rapides -->
+    <div style="border: 1px solid #ccc; padding: 15px; border-radius: 5px;">
+      <h3>Actions Rapides</h3>
+      <button style="margin: 5px;">Nouvelle dépense</button>
+      <br>
+      <button style="margin: 5px;">Nouveau revenu</button>
+      <br>
+      <button style="margin: 5px;">Voir les rapports</button>
+    </div>
+  </div>
 </div>
