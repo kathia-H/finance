@@ -54,7 +54,7 @@
       <div *ngIf="transactions.length === 0">
         <p><em>Aucune transaction pour le moment</em></p>
       </div>
-      <button>Ajouter une transaction</button>
+      <button (click)="goToAddTransaction()" style="background: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">Ajouter une transaction</button>
     </div>
 
     <!-- Budgets -->

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-account',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './add-account.html',
   styleUrls: ['./add-account.scss']
 })

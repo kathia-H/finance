@@ -3,6 +3,7 @@ import { LoginComponent } from './pages/login/login';
 import { RegisterComponent } from './pages/register/register';
 import { DashboardComponent } from './pages/dashboard/dashboard';
 import { AddAccountComponent } from './pages/add-account/add-account';
+import { AddTransactionComponent } from './pages/add-transaction/add-transaction';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -10,5 +11,6 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'add-account', component: AddAccountComponent },
+  { path: 'add-transaction', component: AddTransactionComponent },
   { path: '**', redirectTo: 'dashboard' }
 ];

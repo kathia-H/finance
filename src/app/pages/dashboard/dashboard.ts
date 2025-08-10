@@ -110,4 +110,8 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/add-account']);
   }
 
+  goToAddTransaction() {
+    this.router.navigate(['/add-transaction']);
+  }
+
 }
