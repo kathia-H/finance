@@ -130,8 +130,7 @@ export class DashboardComponent implements OnInit {
   }
 
   viewReports() {
-    // Pour l'instant, afficher un message (on pourrait créer une page de rapports plus tard)
-    alert('📈 Fonctionnalité "Rapports" à venir !\n\nPour l\'instant, vous pouvez voir vos données dans le Dashboard.');
+    this.router.navigate(['/reports']);
   }
 
 }
