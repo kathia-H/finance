@@ -114,4 +114,24 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/add-transaction']);
   }
 
+  goToAddBudget() {
+    this.router.navigate(['/add-budget']);
+  }
+
+  // Actions rapides
+  quickExpense() {
+    // Rediriger vers le formulaire de transaction avec type=expense pré-sélectionné
+    this.router.navigate(['/add-transaction'], { queryParams: { type: 'expense' } });
+  }
+
+  quickIncome() {
+    // Rediriger vers le formulaire de transaction avec type=income pré-sélectionné
+    this.router.navigate(['/add-transaction'], { queryParams: { type: 'income' } });
+  }
+
+  viewReports() {
+    // Pour l'instant, afficher un message (on pourrait créer une page de rapports plus tard)
+    alert('📈 Fonctionnalité "Rapports" à venir !\n\nPour l\'instant, vous pouvez voir vos données dans le Dashboard.');
+  }
+
 }

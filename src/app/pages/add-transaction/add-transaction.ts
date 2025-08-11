@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
@@ -21,13 +21,20 @@ export class AddTransactionComponent implements OnInit {
   message = '';
   loading = false;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
     // Date d'aujourd'hui par défaut
     const today = new Date();
     this.date = today.toISOString().split('T')[0];
   }
 
   ngOnInit() {
+    // Vérifier si un type est passé en paramètre URL (actions rapides)
+    this.route.queryParams.subscribe(params => {
+      if (params['type'] && ['income', 'expense'].includes(params['type'])) {
+        this.type = params['type'];
+      }
+    });
+    
     this.loadAccounts();
   }
 

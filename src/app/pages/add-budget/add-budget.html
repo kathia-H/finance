@@ -1,0 +1,111 @@
+<h2>Créer un Budget</h2>
+
+<div style="max-width: 500px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+  
+  <div style="margin-bottom: 15px;">
+    <label style="display: block; margin-bottom: 5px; font-weight: bold;">
+      Catégorie *
+    </label>
+    <input 
+      type="text" 
+      [value]="category" 
+      (input)="category = $any($event.target).value"
+      placeholder="Ex: Restaurant, Transport, Courses..."
+      style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 10px;"
+      required
+    />
+    
+    <!-- Catégories suggérées -->
+    <div style="margin-bottom: 10px;">
+      <small style="color: #666; margin-bottom: 5px; display: block;">Catégories suggérées :</small>
+      <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+        <button 
+          *ngFor="let cat of suggestedCategories" 
+          type="button"
+          (click)="selectCategory(cat)"
+          [style.background-color]="category === cat ? '#007bff' : '#f8f9fa'"
+          [style.color]="category === cat ? 'white' : '#333'"
+          style="padding: 4px 8px; border: 1px solid #ddd; border-radius: 15px; font-size: 12px; cursor: pointer; transition: all 0.2s;"
+        >
+          {{ cat }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label style="display: block; margin-bottom: 5px; font-weight: bold;">
+      Mois *
+    </label>
+    <input 
+      type="month" 
+      [value]="month" 
+      (input)="month = $any($event.target).value"
+      style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"
+      required
+    />
+    <small style="color: #666;">Format: Année-Mois (ex: 2025-01 pour janvier 2025)</small>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <label style="display: block; margin-bottom: 5px; font-weight: bold;">
+      Montant budgété (€) *
+    </label>
+    <input 
+      type="number" 
+      [value]="amount" 
+      (input)="amount = +$any($event.target).value || 0"
+      step="0.01"
+      min="0"
+      placeholder="0.00"
+      style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"
+      required
+    />
+    <small style="color: #666;">Montant maximum que vous souhaitez dépenser dans cette catégorie ce mois-ci</small>
+  </div>
+
+  <!-- Aperçu du budget -->
+  <div *ngIf="category && month && amount > 0" 
+       style="background: #e7f3ff; padding: 15px; border-radius: 4px; margin-bottom: 20px; border-left: 4px solid #007bff;">
+    <h4 style="margin: 0 0 10px 0; color: #0056b3;">📊 Aperçu du budget</h4>
+    <p style="margin: 5px 0; color: #333;">
+      <strong>Catégorie :</strong> {{ category }}
+    </p>
+    <p style="margin: 5px 0; color: #333;">
+      <strong>Période :</strong> {{ month }}
+    </p>
+    <p style="margin: 5px 0; color: #333;">
+      <strong>Budget :</strong> {{ amount }}€
+    </p>
+    <small style="color: #666;">
+      Vous serez alerté quand vous approchez ou dépassez ce montant.
+    </small>
+  </div>
+
+  <div style="display: flex; gap: 10px; justify-content: space-between;">
+    <button 
+      type="button" 
+      (click)="goBack()"
+      style="padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;"
+    >
+      Annuler
+    </button>
+    
+    <button 
+      type="button" 
+      (click)="onSubmit()"
+      [disabled]="loading || !category.trim() || !month || !amount || amount <= 0"
+      style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;"
+      [style.opacity]="loading || !category.trim() || !month || !amount || amount <= 0 ? '0.6' : '1'"
+    >
+      {{ loading ? 'Création...' : '📊 Créer le budget' }}
+    </button>
+  </div>
+
+  <div *ngIf="message" style="margin-top: 15px; padding: 10px; border-radius: 4px;" 
+       [style.background-color]="message.includes('créé') ? '#d4edda' : '#f8d7da'"
+       [style.color]="message.includes('créé') ? '#155724' : '#721c24'">
+    {{ message }}
+  </div>
+
+</div>

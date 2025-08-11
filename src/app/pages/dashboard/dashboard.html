@@ -79,17 +79,32 @@
       <div *ngIf="budgets.length === 0">
         <p><em>Aucun budget défini pour ce mois</em></p>
       </div>
-      <button>Créer un budget</button>
+      <button (click)="goToAddBudget()" style="background: #ffc107; color: #212529; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: 500;">Créer un budget</button>
     </div>
 
     <!-- Actions Rapides -->
     <div style="border: 1px solid #ccc; padding: 15px; border-radius: 5px;">
       <h3>Actions Rapides</h3>
-      <button style="margin: 5px;">Nouvelle dépense</button>
+      <button 
+        (click)="quickExpense()" 
+        style="margin: 5px; background: #dc3545; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: 500;"
+      >
+        💸 Nouvelle dépense
+      </button>
       <br>
-      <button style="margin: 5px;">Nouveau revenu</button>
+      <button 
+        (click)="quickIncome()" 
+        style="margin: 5px; background: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: 500;"
+      >
+        💰 Nouveau revenu
+      </button>
       <br>
-      <button style="margin: 5px;">Voir les rapports</button>
+      <button 
+        (click)="viewReports()" 
+        style="margin: 5px; background: #6f42c1; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: 500;"
+      >
+        📈 Voir les rapports
+      </button>
     </div>
   </div>
 </div>
